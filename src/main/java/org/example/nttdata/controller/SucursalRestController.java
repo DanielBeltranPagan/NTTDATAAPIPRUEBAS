@@ -25,21 +25,4 @@ public class SucursalRestController {
         }
         return ResponseEntity.ok(sucursales);
     }
-
-    // Endpoint para cambiar la sucursal de un usuario
-    // PUT /api/sucursales/usuarios/5?idSucursal=2
-    @PutMapping("/usuarios/{idUsuario}")
-    public ResponseEntity<Boolean> cambiarSucursalUsuario(
-            @PathVariable Integer idUsuario,
-            @RequestParam Integer idSucursal) {
-
-        Boolean resultado = usuarioService.cambiarIdSucursalUsuario(idUsuario, idSucursal);
-
-        if (Boolean.FALSE.equals(resultado)) {
-            // Si el servicio devuelve false, algo fue mal (IDs no encontrados, etc.)
-            return ResponseEntity.badRequest().body(false);
-        }
-
-        return ResponseEntity.ok(resultado);
-    }
 }

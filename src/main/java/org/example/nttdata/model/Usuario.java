@@ -1,6 +1,8 @@
 package org.example.nttdata.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -27,8 +29,10 @@ public class Usuario {
     private Sucursal sucursal;
 
     @OneToMany(mappedBy = "usuario")
+    @JsonIgnore
     private List<ReservaPuesto> reservasPuesto;
 
     @OneToMany(mappedBy = "usuario")
+    @JsonBackReference
     private List<ReservaSala> reservasSala;
 }

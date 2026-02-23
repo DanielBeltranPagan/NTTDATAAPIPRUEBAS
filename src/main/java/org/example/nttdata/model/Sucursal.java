@@ -23,5 +23,6 @@ public class Sucursal {
     private List<Planta> plantas;
 
     @OneToMany(mappedBy = "sucursal")
+    @JsonIgnore
     private List<Usuario> usuarios;
 }
