@@ -1,6 +1,7 @@
 package org.example.nttdata.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.example.nttdata.dto.LoginDTO;
 import org.example.nttdata.dto.UsuarioDTO;
 import org.example.nttdata.service.UsuarioService;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +17,12 @@ public class UsuarioRestController {
     // POST porque enviamos credenciales (contraseña) y no queremos que viaje en la URL
     @PostMapping("/{id}/validar")
     public ResponseEntity<UsuarioDTO> validarUsuario(
-            @PathVariable Integer id,
-            @RequestBody String contrasena) {
+            @RequestBody LoginDTO loginRequest) {
 
+        Integer id = loginRequest.getId();
+        String cont = loginRequest.getContrasena();
         // 1. Llamamos al servicio para validar credenciales
-        UsuarioDTO usuarioDTO = usuarioService.obtenerUsuarioYValidarContrasena(id, contrasena);
+        UsuarioDTO usuarioDTO = usuarioService.obtenerUsuarioYValidarContrasena(id,cont);
 
         // 2. Si el servicio no lanza excepción, devolvemos el usuario (200 OK)
         return ResponseEntity.ok(usuarioDTO);
