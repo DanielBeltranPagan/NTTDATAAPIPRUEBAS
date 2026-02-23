@@ -20,7 +20,7 @@ public class PlantaRestController {
     @GetMapping("/{idPlanta}/estado")
     public ResponseEntity<PlantaDTO> obtenerEstadoPlanta(
             @PathVariable Integer idPlanta,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha) {
+            @RequestBody @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha) {
 
         // 1. Obtenemos el DTO con la lógica de filtrado del servicio
         PlantaDTO plantaDTO = plantaService.obtenerEstadoPlanta(idPlanta, fecha);

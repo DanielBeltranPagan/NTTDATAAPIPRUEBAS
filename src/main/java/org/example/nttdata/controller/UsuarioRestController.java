@@ -17,7 +17,7 @@ public class UsuarioRestController {
     @PostMapping("/{id}/validar")
     public ResponseEntity<UsuarioDTO> validarUsuario(
             @PathVariable Integer id,
-            @RequestParam String contrasena) {
+            @RequestBody String contrasena) {
 
         // 1. Llamamos al servicio para validar credenciales
         UsuarioDTO usuarioDTO = usuarioService.obtenerUsuarioYValidarContrasena(id, contrasena);
@@ -29,7 +29,7 @@ public class UsuarioRestController {
     @PutMapping("/{idUsuario}/sucursal")
     public ResponseEntity<Boolean> cambiarSucursal(
             @PathVariable Integer idUsuario,
-            @RequestParam Integer idSucursal) {
+            @RequestBody Integer idSucursal) {
 
         // 1. Ejecutamos el cambio y guardamos resultado
         Boolean actualizado = usuarioService.cambiarIdSucursalUsuario(idUsuario, idSucursal);
