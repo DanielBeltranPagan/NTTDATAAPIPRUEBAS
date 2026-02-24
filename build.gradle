@@ -19,34 +19,33 @@ repositories {
 }
 
 dependencies {
+	// --- CAPA DE APLICACIÓN ---
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-webmvc'
+	implementation 'org.springframework.boot:spring-boot-starter-web' // CORREGIDO (antes decía webmvc)
+	implementation 'org.springframework.boot:spring-boot-starter-validation' // Necesaria para el test de anyo_curso=10
+
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'org.postgresql:postgresql'
-	testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa-test'
-	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-	compileOnly 'org.projectlombok:lombok:1.18.30'
-	annotationProcessor 'org.projectlombok:lombok:1.18.30'
+	// --- LOMBOK ---
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
 
-	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.1'
-
-	// Implementación normal de tu app...
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-
-	// --- DEPENDENCIAS DE TEST ACTUALIZADAS ---
+	// --- CAPA DE TESTING ---
+	// Este starter ya incluye JUnit 5, Mockito, AssertJ y Hamcrest. ¡No necesitas poner mockito aparte!
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-	// Testcontainers
+	// Testcontainers para PostgreSQL (para tu UsuarioRepositoryContainersTest)
 	testImplementation 'org.testcontainers:junit-jupiter'
 	testImplementation 'org.testcontainers:postgresql'
 
-	// Forzar dependencias de Mockito si hay conflictos
-	testImplementation 'org.mockito:mockito-core'
-	testImplementation 'org.mockito:mockito-junit-jupiter'
+	// Si quieres usar base de datos en memoria para el test rápido de Repositorio
+	testImplementation 'com.h2database:h2'
 
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	// Añade esta línea para Swagger/OpenAPI
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
 }
 
 tasks.named('test') {
