@@ -1,5 +1,6 @@
 package org.example.nttdata.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.example.nttdata.dto.LoginDTO;
 import org.example.nttdata.dto.UsuarioDTO;
@@ -16,6 +17,7 @@ public class UsuarioRestController {
 
     // POST porque enviamos credenciales (contraseña) y no queremos que viaje en la URL
     @PostMapping("/{id}/validar")
+    @Operation(summary = "Comprobar que el usuario existe y su contraseña.")
     public ResponseEntity<UsuarioDTO> validarUsuario(
             @RequestBody LoginDTO loginRequest) {
 
@@ -29,6 +31,7 @@ public class UsuarioRestController {
     }
 
     @PutMapping("/{idUsuario}/sucursal")
+    @Operation(summary = "Cambiar sucursal del usuario.")
     public ResponseEntity<Boolean> cambiarSucursal(
             @PathVariable Integer idUsuario,
             @RequestBody Integer idSucursal) {

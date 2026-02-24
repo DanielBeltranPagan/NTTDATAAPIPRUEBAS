@@ -1,5 +1,6 @@
 package org.example.nttdata.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.example.nttdata.dto.SucursalDTO;
 import org.example.nttdata.service.SucursalService;
@@ -18,6 +19,7 @@ public class SucursalRestController {
     private final UsuarioService usuarioService;
 
     @GetMapping
+    @Operation(summary = "Obtener todas las sucursales.")
     public ResponseEntity<List<SucursalDTO>> obtenerTodasLasSucursales() {
         List<SucursalDTO> sucursales = sucursalService.obtenerTodasLasSucursales();
         if (sucursales.isEmpty()) {

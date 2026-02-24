@@ -1,5 +1,6 @@
 package org.example.nttdata.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.example.nttdata.dto.ReservaPuestoDTO;
 import org.example.nttdata.service.ReservaPuestoService;
@@ -15,6 +16,7 @@ public class ReservaPuestoRestController {
     private final ReservaPuestoService reservaPuestoService;
 
     @PostMapping
+    @Operation(summary = "Crear reserva de puesto.")
     public ResponseEntity<ReservaPuestoDTO> crearReservaPuesto(@RequestBody ReservaPuestoDTO dto) {
         // 1. Llamada al servicio para persistir la reserva
         ReservaPuestoDTO reservaCreada = reservaPuestoService.crearReservaPuesto(dto);
@@ -24,6 +26,7 @@ public class ReservaPuestoRestController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Eliminar reserva de puesto.")
     public ResponseEntity<Void> eliminarReservaPuesto(@PathVariable Integer id) {
         // 1. Eliminación por ID
         reservaPuestoService.eliminarReservaPorIdReserva(id);

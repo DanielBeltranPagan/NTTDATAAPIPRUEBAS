@@ -1,5 +1,6 @@
 package org.example.nttdata.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.example.nttdata.dto.PlantaDTO;
 import org.example.nttdata.service.PlantaService;
@@ -18,6 +19,7 @@ public class PlantaRestController {
     private final PlantaService plantaService;
 
     @GetMapping("/{idPlanta}/estado")
+    @Operation(summary = "Obtener el estado de la planta.")
     public ResponseEntity<PlantaDTO> obtenerEstadoPlanta(
             @PathVariable Integer idPlanta,
             @RequestBody @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha) {

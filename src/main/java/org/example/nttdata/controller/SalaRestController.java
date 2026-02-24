@@ -1,5 +1,6 @@
 package org.example.nttdata.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.example.nttdata.dto.SalaResumenDTO;
 import org.example.nttdata.service.SalaService;
@@ -14,6 +15,7 @@ public class SalaRestController {
     private final SalaService salaService;
 
     @GetMapping("/{idSala}")
+    @Operation(summary = "Obtener informacion de la sala.")
     public ResponseEntity<SalaResumenDTO> obtenerInformacionSala(@PathVariable Integer idSala) {
 
         // 1. Obtenemos el resumen desde el servicio
