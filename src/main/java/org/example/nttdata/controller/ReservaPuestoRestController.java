@@ -18,20 +18,20 @@ public class ReservaPuestoRestController {
     @PostMapping
     @Operation(summary = "Crear reserva de puesto.")
     public ResponseEntity<ReservaPuestoDTO> crearReservaPuesto(@RequestBody ReservaPuestoDTO dto) {
-        // 1. Llamada al servicio para persistir la reserva
+        //Llamada al servicio para guardar la reserva
         ReservaPuestoDTO reservaCreada = reservaPuestoService.crearReservaPuesto(dto);
 
-        // 2. Retorno de 201 Created
+        //Retorno de 201 Created
         return ResponseEntity.status(HttpStatus.CREATED).body(reservaCreada);
     }
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Eliminar reserva de puesto.")
     public ResponseEntity<Void> eliminarReservaPuesto(@PathVariable Integer id) {
-        // 1. Eliminación por ID
+        //Borramos por ID
         reservaPuestoService.eliminarReservaPorIdReserva(id);
 
-        // 2. Retorno de 204 No Content
+        //Retorno de 204 No Content
         return ResponseEntity.noContent().build();
     }
 }

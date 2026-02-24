@@ -24,10 +24,10 @@ public class PlantaRestController {
             @PathVariable Integer idPlanta,
             @RequestBody @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha) {
 
-        // 1. Obtenemos el DTO con la lógica de filtrado del servicio
+        //Obtenemos el DTO con la lógica de filtrado del servicio
         PlantaDTO plantaDTO = plantaService.obtenerEstadoPlanta(idPlanta, fecha);
 
-        // 2. Retornamos 200 OK con el cuerpo del DTO
+        //Retornamos 200 OK con el cuerpo del DTO
         return ResponseEntity.ok(plantaDTO);
     }
 }

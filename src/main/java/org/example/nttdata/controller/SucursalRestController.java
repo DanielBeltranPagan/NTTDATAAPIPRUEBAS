@@ -25,6 +25,7 @@ public class SucursalRestController {
         if (sucursales.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
+        //Retornamos 200 OK la información
         return ResponseEntity.ok(sucursales);
     }
 }

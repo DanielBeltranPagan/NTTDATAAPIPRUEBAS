@@ -23,11 +23,6 @@ public class SalaMapper {
 
         dto.setReservasSala(sala.getReservasSala());
 
-//        if (sala.getReservasSala() != null) {
-//            dto.setReservasSala(sala.getReservasSala().stream()
-//                    .map(reservaSalaMapper::toDto)
-//                    .collect(Collectors.toList()));
-//        }
         return dto;
     }
 }

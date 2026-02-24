@@ -11,7 +11,6 @@ public class SucursalMapper {
     private final PlantaMapper plantaMapper;
     private final UsuarioMapper usuarioMapper;
 
-    // Inyección por constructor (el estándar de Spring)
     public SucursalMapper(PlantaMapper plantaMapper, UsuarioMapper usuarioMapper) {
         this.plantaMapper = plantaMapper;
         this.usuarioMapper = usuarioMapper;

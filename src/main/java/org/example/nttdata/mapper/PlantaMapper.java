@@ -26,7 +26,6 @@ public class PlantaMapper {
         PlantaDTO dto = new PlantaDTO();
         dto.setIdPlanta(planta.getIdPlanta());
 
-        // evitar bucle → no mapear toda la sucursal
         if (planta.getSucursal() != null) {
             SucursalDTO sucursalDTO = new SucursalDTO();
             sucursalDTO.setIdSucursal(planta.getSucursal().getIdSucursal());

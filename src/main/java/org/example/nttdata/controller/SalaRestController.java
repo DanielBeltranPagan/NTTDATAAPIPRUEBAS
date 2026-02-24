@@ -18,10 +18,10 @@ public class SalaRestController {
     @Operation(summary = "Obtener informacion de la sala.")
     public ResponseEntity<SalaResumenDTO> obtenerInformacionSala(@PathVariable Integer idSala) {
 
-        // 1. Obtenemos el resumen desde el servicio
+        //Obtenemos el resumen desde el servicio
         SalaResumenDTO salaResumen = salaService.obtenerInformacionSala(idSala);
 
-        // 2. Retornamos la información (200 OK)
+        //Retornamos 200 OK la información
         return ResponseEntity.ok(salaResumen);
     }
 }

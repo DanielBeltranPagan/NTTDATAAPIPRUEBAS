@@ -10,15 +10,12 @@ import java.time.LocalDate;
 @Component
 public class PuestoTrabajoMapper {
 
-    // Ya no necesitas el ReservaPuestoMapper (que causaba bucles)
-    // Necesitas el REPOSITORIO para consultar la disponibilidad real
     private final ReservaPuestoRepository reservaPuestoRepository;
 
     public PuestoTrabajoMapper(ReservaPuestoRepository reservaPuestoRepository) {
         this.reservaPuestoRepository = reservaPuestoRepository;
     }
 
-    // Añadimos el parámetro LocalDate fecha
     public PuestoTrabajoDTO toDto(PuestoTrabajo puesto, LocalDate fecha) {
         if (puesto == null) return null;
 
@@ -27,7 +24,6 @@ public class PuestoTrabajoMapper {
         dto.setTieneOrdenador(puesto.getTieneOrdenador());
         dto.setIdPlanta(puesto.getPlanta().getIdPlanta());
 
-        // LÓGICA PROFESIONAL: Consultamos al repositorio si hay una reserva ese día
         boolean estaOcupado = reservaPuestoRepository.existsByPuestoTrabajo_IdPuestoAndFecha(
                 puesto.getIdPuesto(),
                 fecha

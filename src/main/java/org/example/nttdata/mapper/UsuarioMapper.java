@@ -31,17 +31,6 @@ public class UsuarioMapper {
         dto.setReservasSalas(usuario.getReservasSala());
         dto.setReservasPuestos(usuario.getReservasPuesto());
 
-//        if (usuario.getReservasPuesto() != null) {
-//            dto.setReservasPuestos(usuario.getReservasPuesto().stream()
-//                    .map(reservaPuestoMapper::toDto)
-//                    .collect(Collectors.toList()));
-//        }
-//
-//        if (usuario.getReservasSala() != null) {
-//            dto.setReservasSalas(usuario.getReservasSala().stream()
-//                    .map(reservaSalaMapper::toDto)
-//                    .collect(Collectors.toList()));
-//        }
         return dto;
     }
 }

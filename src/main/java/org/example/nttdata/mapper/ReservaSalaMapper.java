@@ -15,7 +15,6 @@ public class ReservaSalaMapper {
         dto.setFecha(reservaSala.getFecha());
         dto.setHoraInicio(reservaSala.getHoraInicio());
         dto.setHoraFin(reservaSala.getHoraFin());
-        // Extraemos solo el ID de las relaciones
         dto.setIdSala(reservaSala.getSala() != null ? reservaSala.getSala().getIdSala() : null);
         dto.setIdUsuario(reservaSala.getUsuario() != null ? reservaSala.getUsuario().getIdUsuario() : null);
         return dto;
