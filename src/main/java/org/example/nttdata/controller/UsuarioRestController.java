@@ -2,6 +2,7 @@ package org.example.nttdata.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.example.nttdata.dto.ActualizarSucursalDTO;
 import org.example.nttdata.dto.LoginDTO;
 import org.example.nttdata.dto.UsuarioDTO;
 import org.example.nttdata.service.UsuarioService;
@@ -33,17 +34,15 @@ public class UsuarioRestController {
     @Operation(summary = "Cambiar sucursal del usuario.")
     public ResponseEntity<Boolean> cambiarSucursal(
             @PathVariable Integer idUsuario,
-            @RequestBody Integer idSucursal) {
+            @RequestBody ActualizarSucursalDTO datos) { // <-- Cambiado de Integer a DTO
 
-        //Ejecutamos el cambio y guardamos resultado
-        Boolean actualizado = usuarioService.cambiarIdSucursalUsuario(idUsuario, idSucursal);
+        // Extraemos el id de la sucursal desde el DTO
+        Boolean actualizado = usuarioService.cambiarIdSucursalUsuario(idUsuario, datos.getIdSucursal());
 
-        //Si es false (error en el servicio), devolvemos un 400 Bad Request
         if (Boolean.FALSE.equals(actualizado)) {
             return ResponseEntity.badRequest().body(false);
         }
 
-        //Si todo ok, 200 OK
         return ResponseEntity.ok(actualizado);
     }
 }
