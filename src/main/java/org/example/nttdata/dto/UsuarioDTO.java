@@ -13,6 +13,6 @@ public class UsuarioDTO {
     private String correo;
     private String rango;
     private SucursalDTO sucursal;
-    private List<ReservaPuesto> reservasPuestos;
-    private List<ReservaSala> reservasSalas;
+    private List<ReservaPuestoDTO> reservasPuestos;
+    private List<ReservaSalaDTO> reservasSalas;
 }

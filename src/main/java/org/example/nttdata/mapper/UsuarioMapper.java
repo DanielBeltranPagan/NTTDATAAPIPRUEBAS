@@ -1,6 +1,8 @@
 package org.example.nttdata.mapper;
 
 import org.example.nttdata.dto.UsuarioDTO;
+import org.example.nttdata.dto.ReservaSalaDTO;
+import org.example.nttdata.dto.ReservaPuestoDTO;
 import org.example.nttdata.model.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -28,8 +30,32 @@ public class UsuarioMapper {
 
         dto.setSucursal(sucursalMapper.toDto(usuario.getSucursal()));
 
-        dto.setReservasSalas(usuario.getReservasSala());
-        dto.setReservasPuestos(usuario.getReservasPuesto());
+
+        // Mapeo de Reservas de Puestos
+        if (usuario.getReservasPuesto() != null) {
+            dto.setReservasPuestos(usuario.getReservasPuesto().stream().map(res -> {
+                ReservaPuestoDTO rDto = new ReservaPuestoDTO();
+                rDto.setIdReserva(res.getIdReserva());
+                rDto.setFecha(res.getFecha());
+                rDto.setHoraInicio(res.getHoraInicio());
+                rDto.setHoraFin(res.getHoraFin());
+                rDto.setIdPuesto(res.getPuestoTrabajo().getIdPuesto());
+                rDto.setIdUsuario(usuario.getIdUsuario());
+                return rDto;
+            }).toList());
+        }
+
+        if (usuario.getReservasSala() != null) {
+            dto.setReservasSalas(usuario.getReservasSala().stream().map(res -> {
+                ReservaSalaDTO sDto = new ReservaSalaDTO();
+                sDto.setIdReserva(res.getIdReserva());
+                sDto.setFecha(res.getFecha());
+                sDto.setHoraInicio(res.getHoraInicio());
+                sDto.setIdSala(res.getSala().getIdSala());
+                sDto.setIdUsuario(usuario.getIdUsuario());
+                return sDto;
+            }).toList());
+        }
 
         return dto;
     }

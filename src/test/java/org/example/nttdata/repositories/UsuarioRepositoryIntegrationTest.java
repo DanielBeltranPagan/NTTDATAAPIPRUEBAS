@@ -3,6 +3,7 @@ package org.example.nttdata.repositories;
 import jakarta.persistence.EntityManager;
 import org.accesodatos.spring.models.Perfil;
 import org.accesodatos.spring.models.Usuario;
+import org.example.nttdata.repository.UsuarioRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
