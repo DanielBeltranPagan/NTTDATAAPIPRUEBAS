@@ -2,6 +2,7 @@ package org.example.nttdata.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.example.nttdata.dto.ReservaPuestoDTO;
 import org.example.nttdata.dto.ReservaSalaDTO;
 import org.example.nttdata.service.ReservaSalaService;
 import org.springframework.http.HttpStatus;
@@ -33,5 +34,15 @@ public class ReservaSalaRestController {
 
         //Retornamos 204 No Content
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ReservaSalaDTO> actualizarReservaSala(
+            @PathVariable Integer id,
+            @RequestBody ReservaSalaDTO reservaDTO) {
+
+        // Aquí vuestro servicio debe buscar la reserva por ID y hacer el save() con los nuevos datos
+        ReservaSalaDTO actualizada = reservaSalaService.actualizarSala(id, reservaDTO);
+        return ResponseEntity.ok(actualizada);
     }
 }
