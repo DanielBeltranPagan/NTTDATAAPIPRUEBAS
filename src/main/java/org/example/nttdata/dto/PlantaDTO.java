@@ -10,6 +10,6 @@ import java.util.List;
 public class PlantaDTO {
     private Integer idPlanta;
     private SucursalDTO sucursal;
-    private List<Sala> salas;
+   // private List<Sala> salas;
     private List<PuestoTrabajoDTO> puestosTrabajo;
 }

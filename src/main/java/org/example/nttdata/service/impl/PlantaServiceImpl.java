@@ -27,13 +27,10 @@ public class PlantaServiceImpl implements PlantaService {
     private final PlantaMapper plantaMapper;
 
     @Override
-    public PlantaDTO obtenerEstadoPlanta(Integer idPlanta, LocalDate fecha){
+    public PlantaDTO obtenerEstadoPlanta(Integer idPlanta, LocalDate fecha) {
         Planta planta = plantaRepository.findById(idPlanta)
                 .orElseThrow(() -> new RuntimeException("Planta no encontrada."));
 
-        List<Sala> salasLibres = planta.getSalas().stream()
-                .filter(sala -> !reservaSalaRepository.existsBySalaIdSalaAndFecha(sala.getIdSala(), fecha))
-                .collect(Collectors.toList());
         List<PuestoTrabajoDTO> puestosConEstado = planta.getPuestosTrabajo().stream()
                 .map(puesto -> {
                     PuestoTrabajoDTO dto = new PuestoTrabajoDTO();
@@ -42,17 +39,16 @@ public class PlantaServiceImpl implements PlantaService {
                     dto.setIdPlanta(idPlanta);
                     dto.setOcupado(
                             reservaPuestoRepository.existsByPuestoTrabajo_IdPuestoAndFecha(
-                                    puesto.getIdPuesto(), fecha
-                            )
+                                    puesto.getIdPuesto(), fecha)
                     );
                     return dto;
                 })
                 .collect(Collectors.toList());
 
-        PlantaDTO dto = plantaMapper.toDto(planta);
-        dto.setSalas(salasLibres);
+        PlantaDTO dto = new PlantaDTO();
+        dto.setIdPlanta(planta.getIdPlanta());
         dto.setPuestosTrabajo(puestosConEstado);
-
+        dto.setSalas(null); // ← evitamos la serialización problemática de Sala
         return dto;
     }
 }
