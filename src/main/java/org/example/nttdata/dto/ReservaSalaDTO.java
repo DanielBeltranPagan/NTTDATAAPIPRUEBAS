@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Data
 public class ReservaSalaDTO {
@@ -11,6 +12,6 @@ public class ReservaSalaDTO {
     private Integer idSala;
     private Integer idUsuario;
     private LocalDate fecha;
-    private LocalDateTime horaInicio;
-    private LocalDateTime horaFin;
+    private LocalTime horaInicio;
+    private LocalTime horaFin;
 }

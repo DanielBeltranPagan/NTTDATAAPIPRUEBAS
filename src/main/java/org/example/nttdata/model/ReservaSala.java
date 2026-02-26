@@ -6,6 +6,7 @@ import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Data
 @Entity
@@ -20,10 +21,10 @@ public class ReservaSala {
     private LocalDate fecha;
 
     @Column(name = "hora_inicio")
-    private LocalDateTime horaInicio;
+    private LocalTime horaInicio;
 
     @Column(name = "hora_fin")
-    private LocalDateTime horaFin;
+    private LocalTime horaFin;
 
     @ManyToOne
     @JoinColumn(name = "id_usuario")
