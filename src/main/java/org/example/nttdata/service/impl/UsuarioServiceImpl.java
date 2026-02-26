@@ -20,9 +20,9 @@ public class UsuarioServiceImpl implements UsuarioService {
     private final UsuarioMapper usuarioMapper;
 
     @Override
-    public UsuarioDTO obtenerUsuarioYValidarContrasena(Integer id, String contrasenaIntroducida){
+    public UsuarioDTO obtenerUsuarioPorCorreoYValidarContrasena(String correo, String contrasenaIntroducida){
 
-        Usuario usuario = usuarioRepository.findById(id)
+        Usuario usuario = usuarioRepository.findByCorreo(correo)
                 .orElseThrow(() -> new RuntimeException("Usuraio no encontrado."));
 
         if(usuario.getContrasena().equals(contrasenaIntroducida)){

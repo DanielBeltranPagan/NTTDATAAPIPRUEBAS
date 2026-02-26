@@ -16,17 +16,15 @@ public class UsuarioRestController {
 
     private final UsuarioService usuarioService;
 
-    @PostMapping("/{id}/validar")
-    @Operation(summary = "Comprobar que el usuario existe y su contraseña.")
-    public ResponseEntity<UsuarioDTO> validarUsuario(
-            @RequestBody LoginDTO loginRequest) {
-
-        Integer id = loginRequest.getId();
+    @PostMapping("/validar") // Quitamos el /{id} de la ruta
+    public ResponseEntity<UsuarioDTO> validarUsuario(@RequestBody LoginDTO loginRequest) {
+        // Extraemos el correo y la contraseña del DTO
+        String correo = loginRequest.getCorreo();
         String cont = loginRequest.getContrasena();
-        //Llamamos al servicio para validar credenciales
-        UsuarioDTO usuarioDTO = usuarioService.obtenerUsuarioYValidarContrasena(id,cont);
 
-        //Si el servicio no lanza excepción, devolvemos el usuario 200 OK
+        // El servicio ahora debe buscar por correo
+        UsuarioDTO usuarioDTO = usuarioService.obtenerUsuarioPorCorreoYValidarContrasena(correo, cont);
+
         return ResponseEntity.ok(usuarioDTO);
     }
 
