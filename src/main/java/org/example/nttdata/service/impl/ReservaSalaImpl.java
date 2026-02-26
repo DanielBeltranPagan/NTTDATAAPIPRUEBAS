@@ -44,4 +44,24 @@ public class ReservaSalaImpl implements ReservaSalaService {
         }
         reservaSalaRepository.deleteById(idReserva);
     }
+
+    @Override
+    public ReservaSalaDTO actualizarSala(Integer id, ReservaSalaDTO dto) {
+        // 1. Buscamos la reserva actual en la base de datos
+        ReservaSala reservaExistente = reservaSalaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Reserva de sala no encontrada con ID: " + id));
+
+        // 2. Modificamos solo lo que habéis pedido: fecha y hora
+        reservaExistente.setFecha(dto.getFecha());
+        reservaExistente.setHoraInicio(dto.getHoraInicio());
+
+        // Si vuestro DTO también permite cambiar la hora de fin, descomentad la siguiente línea:
+        // reservaExistente.setHoraFin(dto.getHoraFin());
+
+        // 3. Guardamos los cambios
+        ReservaSala guardada = reservaSalaRepository.save(reservaExistente);
+
+        // 4. Devolvemos el DTO actualizado usando vuestro mapper
+        return reservaSalaMapper.toDto(guardada);
+    }
 }

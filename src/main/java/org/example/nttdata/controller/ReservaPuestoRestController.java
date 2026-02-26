@@ -34,4 +34,14 @@ public class ReservaPuestoRestController {
         //Retorno de 204 No Content
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ReservaPuestoDTO> actualizarReservaPuesto(
+            @PathVariable Integer id,
+            @RequestBody ReservaPuestoDTO reservaDTO) {
+
+        // Aquí vuestro servicio debe buscar la reserva por ID y hacer el save() con los nuevos datos
+        ReservaPuestoDTO actualizada = reservaPuestoService.actualizarPuesto(id, reservaDTO);
+        return ResponseEntity.ok(actualizada);
+    }
 }
