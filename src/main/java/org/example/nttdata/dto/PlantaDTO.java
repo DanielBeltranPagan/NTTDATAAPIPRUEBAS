@@ -11,5 +11,5 @@ public class PlantaDTO {
     private Integer idPlanta;
     private SucursalDTO sucursal;
     private List<Sala> salas;
-    private List<PuestoTrabajo> puestosTrabajo;
+    private List<PuestoTrabajoDTO> puestosTrabajo;
 }

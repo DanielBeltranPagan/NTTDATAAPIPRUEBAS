@@ -2,6 +2,7 @@ package org.example.nttdata.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.example.nttdata.dto.PlantaDTO;
+import org.example.nttdata.dto.PuestoTrabajoDTO;
 import org.example.nttdata.mapper.PlantaMapper;
 import org.example.nttdata.model.Planta;
 import org.example.nttdata.model.PuestoTrabajo;
@@ -33,14 +34,24 @@ public class PlantaServiceImpl implements PlantaService {
         List<Sala> salasLibres = planta.getSalas().stream()
                 .filter(sala -> !reservaSalaRepository.existsBySalaIdSalaAndFecha(sala.getIdSala(), fecha))
                 .collect(Collectors.toList());
-
-        List<PuestoTrabajo> puestoTrabajoLibres = planta.getPuestosTrabajo().stream()
-                .filter(puestoTrabajo -> !reservaPuestoRepository.existsByPuestoTrabajo_IdPuestoAndFecha(puestoTrabajo.getIdPuesto(), fecha))
+        List<PuestoTrabajoDTO> puestosConEstado = planta.getPuestosTrabajo().stream()
+                .map(puesto -> {
+                    PuestoTrabajoDTO dto = new PuestoTrabajoDTO();
+                    dto.setIdPuesto(puesto.getIdPuesto());
+                    dto.setTieneOrdenador(puesto.getTieneOrdenador());
+                    dto.setIdPlanta(idPlanta);
+                    dto.setOcupado(
+                            reservaPuestoRepository.existsByPuestoTrabajo_IdPuestoAndFecha(
+                                    puesto.getIdPuesto(), fecha
+                            )
+                    );
+                    return dto;
+                })
                 .collect(Collectors.toList());
 
         PlantaDTO dto = plantaMapper.toDto(planta);
         dto.setSalas(salasLibres);
-        dto.setPuestosTrabajo(puestoTrabajoLibres);
+        dto.setPuestosTrabajo(puestosConEstado);
 
         return dto;
     }

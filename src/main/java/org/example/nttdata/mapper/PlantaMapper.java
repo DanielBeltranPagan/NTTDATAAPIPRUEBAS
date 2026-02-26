@@ -33,7 +33,6 @@ public class PlantaMapper {
         }
 
         dto.setSalas(planta.getSalas());
-        dto.setPuestosTrabajo(planta.getPuestosTrabajo());
 
         return dto;
     }
