@@ -32,7 +32,7 @@ public class PlantaMapper {
             dto.setSucursal(sucursalDTO);
         }
 
-        dto.setSalas(planta.getSalas());
+//        dto.setSalas(planta.getSalas());
 
         return dto;
     }

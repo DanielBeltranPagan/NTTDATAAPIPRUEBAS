@@ -5,8 +5,6 @@ import org.example.nttdata.dto.PlantaDTO;
 import org.example.nttdata.dto.PuestoTrabajoDTO;
 import org.example.nttdata.mapper.PlantaMapper;
 import org.example.nttdata.model.Planta;
-import org.example.nttdata.model.PuestoTrabajo;
-import org.example.nttdata.model.Sala;
 import org.example.nttdata.repository.PlantaRepository;
 import org.example.nttdata.repository.ReservaPuestoRepository;
 import org.example.nttdata.repository.ReservaSalaRepository;
@@ -48,7 +46,7 @@ public class PlantaServiceImpl implements PlantaService {
         PlantaDTO dto = new PlantaDTO();
         dto.setIdPlanta(planta.getIdPlanta());
         dto.setPuestosTrabajo(puestosConEstado);
-        dto.setSalas(null); // ← evitamos la serialización problemática de Sala
+//        dto.setSalas(null); // ← evitamos la serialización problemática de Sala
         return dto;
     }
 }
