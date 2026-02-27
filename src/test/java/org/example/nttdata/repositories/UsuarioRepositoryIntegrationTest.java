@@ -1,60 +1,50 @@
 package org.example.nttdata.repositories;
 
-import jakarta.persistence.EntityManager;
-import org.accesodatos.spring.models.Perfil;
-import org.accesodatos.spring.models.Usuario;
+import org.example.nttdata.model.Sucursal;
+import org.example.nttdata.model.Usuario;
+import org.example.nttdata.repository.SucursalRepository;
 import org.example.nttdata.repository.UsuarioRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
-import org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 
-@DataJpaTest // Configura una BD en memoria y carga solo entidades y repositorios
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+@DataJpaTest
+@AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 class UsuarioRepositoryIntegrationTest {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
 
     @Autowired
-    private EntityManager entityManager; // Usamos el motor de JPA para consultas directas
+    private SucursalRepository sucursalRepository;
 
     @Test
-    void eliminarUsuario_DebeEliminarPerfilEnCascada() {
-        // 1. GIVEN: Preparamos los datos
+    void findByCorreo_DebeRetornarUsuario() {
+        Sucursal sucursal = new Sucursal();
+        sucursal = sucursalRepository.save(sucursal);
+
         Usuario usuario = new Usuario();
-        usuario.setUsername("usuario_test");
-        usuario.setPassword("1234");
-        usuario.setEmail("test@test.com");
+        usuario.setCorreo("usuario@test.com");
+        usuario.setContrasena("1234");
+        usuario.setSucursal(sucursal);
+        usuarioRepository.save(usuario);
 
-        Perfil perfil = new Perfil();
-        perfil.setNombreCompleto("Usuario Test");
-        perfil.setTelefono("600111222");
-        perfil.setDireccion("Calle Falsa 123");
-        usuario.setPerfil(perfil); // Sincronizamos la relación bidireccional
+        Optional<Usuario> encontrado = usuarioRepository.findByCorreo("usuario@test.com");
 
-        // Persistimos el usuario (y por cascada, el perfil)
-        Usuario guardado = usuarioRepository.save(usuario);
-        Long idPerfil = guardado.getPerfil().getId();
+        assertTrue(encontrado.isPresent());
+        assertEquals("usuario@test.com", encontrado.get().getCorreo());
+        assertEquals(sucursal.getIdSucursal(), encontrado.get().getSucursal().getIdSucursal());
+    }
 
-        // 2. WHEN: Ejecutamos la acción de borrado
-        usuarioRepository.delete(guardado);
-
-        /*
-            IMPORTANTE: Forzamos el volcado a la BD y limpiamos la caché.
-            Si no hacemos esto, entityManager.find() podría devolver el objeto
-            que aún reside en la memoria (caché de primer nivel) de JPA.
-        */
-        usuarioRepository.flush();
-        entityManager.clear();
-
-        // 3. THEN: Verificaciones
-        // Comprobamos que el usuario ya no existe usando el repositorio
-        assertFalse(usuarioRepository.findById(guardado.getId()).isPresent());
-
-        // Comprobamos que el perfil ya no existe usando el EntityManager directamentea
-        // al no tener una interfaz PerfilRepository para esta comprobación
-        Perfil perfilEnBD = entityManager.find(Perfil.class, idPerfil);
-        assertNull(perfilEnBD, "El perfil debería haber sido borrado por la cascada de JPA");
+    @Test
+    void findByCorreo_NoExiste_DebeRetornarVacio() {
+        Optional<Usuario> encontrado = usuarioRepository.findByCorreo("noexiste@test.com");
+        assertFalse(encontrado.isPresent());
     }
 }
